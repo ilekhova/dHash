@@ -155,7 +155,7 @@ __int64 calcImageHash(IplImage* src, bool show_results)
 
         cvReleaseImage(&dst3);
         cvReleaseImage(&dst1);
-    }*/
+    } */
 
         // освобождаем ресурсы
     cvReleaseImage(&res);
