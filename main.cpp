@@ -1,4 +1,4 @@
-#include <core/core.hpp>
+п»ї#include <core/core.hpp>
 #include <highgui/highgui.hpp>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,9 +10,9 @@
 using namespace cv;
 using namespace std;
 
-// рассчитать хеш картинки
+// СЂР°СЃСЃС‡РёС‚Р°С‚СЊ С…РµС€ РєР°СЂС‚РёРЅРєРё
 __int64 calcImageHash(IplImage* image, bool show_results=false);
-// рассчёт расстояния Хэмминга
+// СЂР°СЃСЃС‡С‘С‚ СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РҐСЌРјРјРёРЅРіР°
 __int64 calcHammingDistance(__int64 x, __int64 y);
 
 
@@ -20,21 +20,21 @@ int main(int argc, char* argv[])
 {
     IplImage *object=0, *image=0;
     std::ifstream file("images.txt");
-    std::vector<std::string> v; //Вектор строк
-    std::string S;  //Считываемое слово из файла
+    std::vector<std::string> v; //Р’РµРєС‚РѕСЂ СЃС‚СЂРѕРє
+    std::string S;  //РЎС‡РёС‚С‹РІР°РµРјРѕРµ СЃР»РѕРІРѕ РёР· С„Р°Р№Р»Р°
 
-    while(getline(file, S))  v.push_back(S);  //Считывание в вектор названий из файла
+    while(getline(file, S))  v.push_back("images/"+S);  //РЎС‡РёС‚С‹РІР°РЅРёРµ РІ РІРµРєС‚РѕСЂ РЅР°Р·РІР°РЅРёР№ РёР· С„Р°Р№Р»Р°
 
-    for (unsigned int i=0;i<v.size();i++) std::cout<<v.at(i)<<"\n"; //Вывод вектора на экран
+    for (unsigned int i=0;i<v.size();i++) std::cout<<v.at(i)<<"\n"; //Р’С‹РІРѕРґ РІРµРєС‚РѕСЂР° РЅР° СЌРєСЂР°РЅ
 
-    char obj_name[] = "object.jpg";
+    char obj_name[] = "images/object.jpg";
 
 
-        // имя объекта задаётся первым параметром
+        // РёРјСЏ РѕР±СЉРµРєС‚Р° Р·Р°РґР°С‘С‚СЃСЏ РїРµСЂРІС‹Рј РїР°СЂР°РјРµС‚СЂРѕРј
     char* object_filename = argc >= 2 ? argv[1] : obj_name;
     object = cvLoadImage(object_filename, 1);
     __int64 hashO = calcImageHash(object, true);
-        // имя картинки задаётся вторым параметром
+        // РёРјСЏ РєР°СЂС‚РёРЅРєРё Р·Р°РґР°С‘С‚СЃСЏ РІС‚РѕСЂС‹Рј РїР°СЂР°РјРµС‚СЂРѕРј
 
     for (unsigned int i=0;i<v.size();i++)
     {
@@ -62,45 +62,45 @@ int main(int argc, char* argv[])
         }
         __int64 hashI = calcImageHash(image, false);
 
-        // рассчитаем расстояние Хэмминга
+        // СЂР°СЃСЃС‡РёС‚Р°РµРј СЂР°СЃСЃС‚РѕСЏРЅРёРµ РҐСЌРјРјРёРЅРіР°
         __int64 dist = calcHammingDistance(hashO, hashI);
 
         printf("[i] Hamming distance: %I64d \n\n\n", dist);
         cvReleaseImage(&image);
 
         }
-        // получаем картинку
+        // РїРѕР»СѓС‡Р°РµРј РєР°СЂС‚РёРЅРєСѓ
 
 
 
 
 
-       /* // покажем изображение
+       /* // РїРѕРєР°Р¶РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ
         cvNamedWindow( "object");
         cvShowImage( "object", object );
         cvNamedWindow( "image");
         cvShowImage( "image", image );
         */
-        // построим хэш
+        // РїРѕСЃС‚СЂРѕРёРј С…СЌС€
 
         //cvWaitKey(0);
 
 
-        // ждём нажатия клавиши
+        // Р¶РґС‘Рј РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё
         //cvWaitKey(0);
 
-        // освобождаем ресурсы
+        // РѕСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹
 
 
 
 
         cvReleaseImage(&object);
-        // удаляем окна
+        // СѓРґР°Р»СЏРµРј РѕРєРЅР°
        // cvDestroyAllWindows();*/
         return 0;
 }
 
-// рассчитать хеш картинки
+// СЂР°СЃСЃС‡РёС‚Р°С‚СЊ С…РµС€ РєР°СЂС‚РёРЅРєРё
 __int64 calcImageHash(IplImage* src, bool show_results)
 {
     if(!src)
@@ -114,16 +114,16 @@ __int64 calcImageHash(IplImage* src, bool show_results)
     gray = cvCreateImage( cvSize(9, 8), IPL_DEPTH_8U, 1);
 
 
-        // уменьшаем картинку
+        // СѓРјРµРЅСЊС€Р°РµРј РєР°СЂС‚РёРЅРєСѓ
     cvResize(src, res);
-        // переводим в градации серого
+        // РїРµСЂРµРІРѕРґРёРј РІ РіСЂР°РґР°С†РёРё СЃРµСЂРѕРіРѕ
     cvCvtColor(res, gray, CV_BGR2GRAY);
 
-        // построим хэш
+        // РїРѕСЃС‚СЂРѕРёРј С…СЌС€
     __int64 hash = 0;
 
     int i=0;
-        // пробегаемся по всем пикселям изображения
+        // РїСЂРѕР±РµРіР°РµРјСЃСЏ РїРѕ РІСЃРµРј РїРёРєСЃРµР»СЏРј РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
     for( int y=0; y<gray->height; y++ ) {
         uchar* ptr = (uchar*) (gray->imageData + y * gray->widthStep);
         for( int x=0; x<gray->width-1; x++ ) {
@@ -140,11 +140,11 @@ __int64 calcImageHash(IplImage* src, bool show_results)
     printf("[i] hash: %I64X \n", hash);
 
     /*if(show_results){
-    // увеличенные картинки для отображения результатов
+    // СѓРІРµР»РёС‡РµРЅРЅС‹Рµ РєР°СЂС‚РёРЅРєРё РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
         IplImage* dst3 = cvCreateImage( cvSize(128, 128), IPL_DEPTH_8U, 3);
         IplImage* dst1 = cvCreateImage( cvSize(128, 128), IPL_DEPTH_8U, 1);
 
-        // показываем картинки
+        // РїРѕРєР°Р·С‹РІР°РµРј РєР°СЂС‚РёРЅРєРё
         cvNamedWindow( "64");
         cvResize(res, dst3, CV_INTER_NN);
         cvShowImage( "64", dst3 );
@@ -157,7 +157,7 @@ __int64 calcImageHash(IplImage* src, bool show_results)
         cvReleaseImage(&dst1);
     } */
 
-        // освобождаем ресурсы
+        // РѕСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹
     cvReleaseImage(&res);
     cvReleaseImage(&gray);
 
@@ -165,9 +165,9 @@ __int64 calcImageHash(IplImage* src, bool show_results)
     return hash;
 }
 
-// рассчёт расстояния Хэмминга между двумя хэшами
+// СЂР°СЃСЃС‡С‘С‚ СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РҐСЌРјРјРёРЅРіР° РјРµР¶РґСѓ РґРІСѓРјСЏ С…СЌС€Р°РјРё
 // http://en.wikipedia.org/wiki/Hamming_distance
-// http://ru.wikipedia.org/wiki/Расстояние_Хэмминга
+// http://ru.wikipedia.org/wiki/Р Р°СЃСЃС‚РѕСЏРЅРёРµ_РҐСЌРјРјРёРЅРіР°
 //
 __int64 calcHammingDistance(__int64 x, __int64 y)
 {
